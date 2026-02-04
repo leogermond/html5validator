@@ -2,6 +2,7 @@
 
 import errno
 import fnmatch
+import json
 import logging
 import os
 import re
@@ -194,11 +195,14 @@ class Validator:
         # Removes any empty items in the list
         err = list(filter(None, err))
 
-        # Prevents removal of xml tags if there are errors
         if self.format == "xml" and len(err) < 4:
+            # Prevents removal of xml tags if there are errors
             self.ignore = DEFAULT_IGNORE_XML
+        elif self.format == "json":
+            # For JSON: Only keep messages
+            err = [json.dumps(s) for s in json.loads(err[0])["messages"]]
 
-        LOGGER.debug(err)
+        LOGGER.debug(f"err={err}")
 
         for ignored in self.ignore:
             err = [line for line in err if ignored not in line]
