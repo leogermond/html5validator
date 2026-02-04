@@ -1,5 +1,5 @@
-HTML5 Validator
-===============
+HTML5 Validator 2
+=================
 
     ``html5validator`` is a command line tool that tests files for
     HTML5 validity. This was written with static site generators like
@@ -9,8 +9,8 @@ HTML5 Validator
     (e.g. with `localcrawl <https://github.com/svenkreiss/localcrawl>`_)
     and then validated.
 
-.. image:: https://github.com/svenkreiss/html5validator/actions/workflows/tests.yml/badge.svg?branch=main
-    :target: https://github.com/svenkreiss/html5validator/actions/workflows/tests.yml
+.. image:: https://github.com/leogermond/html5validator/actions/workflows/tests.yml/badge.svg?branch=main
+    :target: https://github.com/leogermond/html5validator/actions/workflows/tests.yml
 .. image:: https://badge.fury.io/py/html5validator.svg
     :target: https://pypi.python.org/pypi/html5validator/
 
@@ -18,8 +18,8 @@ HTML5 Validator
 Install
 -------
 
-This module requires Python 3.6, 3.7, 3.8, 3.9 or 3.10 and Java 8 (``openjdk8`` or ``oraclejdk8``).
-Install with ``pip install html5validator`` and run with
+This module requires Python 3.12 or 3.13 and Java 8 (``openjdk8`` or ``oraclejdk8``).
+Install with ``uv add html5validator2`` and run with
 
 .. code-block:: bash
 
@@ -37,7 +37,7 @@ Run ``html5validator --help`` to see the list of command line options::
                           [--log-file LOG_FILE] [--version]
                           [files ...]
 
-    [v0.4.2] Command line tool for HTML5 validation. Return code is 0 for valid
+    [v2.0.0] Command line tool for HTML5 validation. Return code is 0 for valid
     HTML5. Arguments that are unknown to html5validator
     are passed as arguments to `vnu.jar`.
 
@@ -89,173 +89,6 @@ Checking CSS/SVG
 Replace ``css`` with ``svg`` for similar behavior with SVG files.
 
 
-Integration with CircleCI 1.0
------------------------------
-
-Create a ``circle.yml`` file:
-
-.. code-block:: yaml
-
-    machine:
-      java:
-        version: openjdk8
-    dependencies:
-      pre:
-        - sudo pip install html5validator
-    test:
-      override:
-        - html5validator --root _build/
-
-in your repository with static html files and get HTML5 validation on every
-``git push``.
-
-
-Integration with CircleCI 2.0
------------------------------
-
-Simplified example ``circle.yml`` file from
-`pelican-jsmath <https://github.com/svenkreiss/pelican-jsmath>`_:
-
-.. code-block:: yaml
-
-    version: 2
-    jobs:
-      test-3.6:
-        docker:
-          - image: python:3.6-stretch
-        steps:
-          - run:
-              name: install Java
-              command: apt-get update && apt-get install -y openjdk-8-jre
-          - checkout
-          - run:
-              name: install
-              command: pip install '.[test]'
-          - run:
-              name: generate html
-              working_directory: test/example_site
-              command: pelican content -s pelicanconf.py
-          - run:
-              name: validate html
-              command: html5validator --root test/example_site/output
-    workflows:
-      version: 2
-      build_and_test:
-        jobs:
-          - test-3.6
-
-
-Integration with TravisCI
--------------------------
-
-Create a ``.travis.yml`` file. This is an example for a Python project:
-
-.. code-block:: yaml
-
-    language: python
-    python:
-     - "2.7"
-    addons:
-      apt:
-        packages:
-          - openjdk-8-jre  # install Java8 as required by vnu.jar
-
-    branches:
-      only:
-        - gh-pages
-
-    install:
-     - pip install html5validator
-
-    script: html5validator --root _build/
-
-This is an example for Java project:
-
-.. code-block:: yaml
-
-    language: java
-    jdk:
-     - oraclejdk8  # vnu.jar requires Java 8
-
-    branches:
-      only:
-        - gh-pages
-
-    install:
-     - pip install --user html5validator
-
-    script: html5validator --root _build/
-
-
-Fix the ``html5validator`` version by using
-``pip install --user html5validator==<version number>``.
-
-You can also use this for user pages (repositories of the form ``<username>.github.io``)
-where the html files are in the master branch. You only have to remove:
-
-.. code-block:: yaml
-
-    branches:
-      only:
-        - gh-pages
-
-from ``.travis.yml``. I am using this on
-`my own user page <https://github.com/svenkreiss/svenkreiss.github.io/blob/master/.travis.yml>`_.
-
-
-Integration with CodeShip
--------------------------
-
-Add this lines to the ``Setup Commands``:
-
-.. code-block:: yaml
-
-    jdk_switcher use oraclejdk8
-    pip install html5validator
-
-
-This is an example for Ruby project:
-
-.. code-block:: yaml
-
-    rvm use 2.2.0 --install
-    bundle install
-    bundle update
-    export RAILS_ENV=test
-    jdk_switcher use oraclejdk8
-    pip install html5validator
-
-Integration with GitLab CI
---------------------------------
-
-There is a docker image available to be used with GitLab CI or stand alone.
-`Docker image <https://hub.docker.com/r/cyb3rjak3/html5validator>`_,
-`Docker image repo <https://github.com/Cyb3r-Jak3/html5validator-docker>`_.
-
-Example for html test `(Full) <https://gitlab.com/Cyb3r-Jak3/Portfolio-Website/blob/master/.gitlab-ci.yml>`_:
-
-.. code-block:: yaml
-
-    html_test:
-      stage: html_test
-      image: cyb3rjak3/html5validator:latest
-      script:
-        - html5validator --root public/ --also-check-css --format text
-
-Integration with GitHub Actions
----------------------------------
-
-There is a Github Action that can be used to check repositories. `Marketplace Link <https://github.com/marketplace/actions/html5-validator>`_.
-
-Example action:
-
-.. code-block:: yaml
-
-    - name: HTML5 Validator
-      uses: Cyb3r-Jak3/html5validator-action@master
-      with:
-        root: html/
-
 Technical Notes
 ---------------
 
@@ -270,7 +103,12 @@ Changelog
 
 Install a particular version, for example ``0.1.14``, with ``pip install html5validator==0.1.14``.
 
-* `main <https://github.com/svenkreiss/html5validator/compare/v0.4.2...main>`_
+* `main <https://github.com/svenkreiss/html5validator/compare/v2.0.0...main>`_
+* `2.0.0 <https://github.com/leogermond/html5validator/compare/v0.4.2...v2.0.0>`_ (2026-02-04)
+    * fork 
+    * remove support for older python versions
+    * vnu.jar updated to 26.01.03
+    * add programmatic interface ``validator.get_errors(files)``
 * `0.4.2 <https://github.com/svenkreiss/html5validator/compare/v0.4.0...v0.4.2>`_ (2022-05-29)
     * test with Python 3.10
     * vnu.jar updated to 20.6.30

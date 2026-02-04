@@ -4,16 +4,16 @@ from html5validator import __version__
 
 
 setup(
-    name="html5validator",
+    name="html5validator2",
     version=__version__,
     packages=["html5validator", "html5validator.tests", "vnujar"],
     license="MIT",
     description="Validate HTML5 files.",
     long_description=open("README.rst").read(),
     long_description_content_type="text/x-rst",
-    author="Sven Kreiss",
-    author_email="me@svenkreiss.com",
-    url="https://github.com/svenkreiss/html5validator",
+    author="Léo Germond",
+    author_email="leo.germond@gmail.com",
+    url="https://github.com/leogermond/html5validator",
     include_package_data=True,
     zip_safe=False,
     python_reqires=">=3.12",
