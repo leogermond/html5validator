@@ -4,7 +4,7 @@ from html5validator import __version__
 
 
 setup(
-    name="html5validator2",
+    name="html5validator-leogermond",
     version=__version__,
     packages=["html5validator", "html5validator.tests", "vnujar"],
     license="MIT",
