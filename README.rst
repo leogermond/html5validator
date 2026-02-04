@@ -37,7 +37,7 @@ Run ``html5validator --help`` to see the list of command line options::
                           [--log-file LOG_FILE] [--version]
                           [files ...]
 
-    [v2.0.0] Command line tool for HTML5 validation. Return code is 0 for valid
+    [v2.0.1] Command line tool for HTML5 validation. Return code is 0 for valid
     HTML5. Arguments that are unknown to html5validator
     are passed as arguments to `vnu.jar`.
 
@@ -103,9 +103,10 @@ Changelog
 
 Install a particular version, for example ``0.1.14``, with ``pip install html5validator==0.1.14``.
 
-* `main <https://github.com/svenkreiss/html5validator/compare/v2.0.0...main>`_
-* `2.0.0 <https://github.com/leogermond/html5validator/compare/v0.4.2...v2.0.0>`_ (2026-02-04)
-    * fork 
+* `main <https://github.com/svenkreiss/html5validator/compare/v2.0.1...main>`_
+* `2.0.1 <https://github.com/leogermond/html5validator/compare/v0.4.2...v2.0.1>`_ (2026-02-04)
+    * fork
+    * updated major to be sure not to confuse with original
     * remove support for older python versions
     * vnu.jar updated to 26.01.03
     * add programmatic interface ``validator.get_errors(files)``
